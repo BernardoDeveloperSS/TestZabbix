@@ -9,13 +9,14 @@ yum install -y zabbix zabbix-agent
 
 # configure zabbix_agent
 name=$(hostnamectl | egrep -i "Static hostname" | awk '{print $NF}')
-echo -e "\n\nServer=10.10.1.157,179.110.69.19/32,186.230.32.171/32\nHostname=$name\n" >> /etc/zabbix/zabbix_agentd.conf
+echo -e "\n\nServer=10.10.1.157,10.10.1.55,179.110.69.19/32,186.230.32.171/32\nHostname=$name\n" >> /etc/zabbix/zabbix_agentd.conf
 
 # save the server name in a file
 echo "$name" >> ./server_name.txt
 
 # firewall configuration
 iptables -A INPUT -p tcp -s 10.10.1.157 --dport 10050 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A INPUT -p tcp -s 10.10.1.55 --dport 10050 -m state --state NEW,ESTABLISHED -j ACCEPT
 iptables -A INPUT -p tcp -s 179.110.69.19/32 --dport 10050 -m state --state NEW,ESTABLISHED -j ACCEPT
 iptables -A INPUT -p tcp -s 186.230.32.171/32 --dport 10050 -m state --state NEW,ESTABLISHED -j ACCEPT
 
