@@ -9,7 +9,7 @@ yum install -y zabbix zabbix-agent
 
 # configure zabbix_agent
 name=$(hostnamectl | egrep -i "Static hostname" | awk '{print $NF}')
-echo -e "Server=10.10.1.157,179.110.69.19/32,186.230.32.171/32\nHostname=$name" >> /etc/zabbix/zabbix_agentd.conf
+echo -e "\n\nServer=10.10.1.157,179.110.69.19/32,186.230.32.171/32\nHostname=$name\n" >> /etc/zabbix/zabbix_agentd.conf
 
 # save the server name in a file
 echo "$name" >> ./server_name.txt
@@ -22,7 +22,6 @@ iptables -A INPUT -p tcp -s 186.230.32.171/32 --dport 10050 -m state --state NEW
 # restart zabbix agent
 service zabbix-agent restart
 
-# TODO: copiar os scripts
 cd /etc/zabbix/
 mkdir scripts/
 cd scripts/
@@ -44,4 +43,6 @@ wget "https://raw.githubusercontent.com/BernardoDeveloperSS/TestZabbix/main/chec
 wget "https://raw.githubusercontent.com/BernardoDeveloperSS/TestZabbix/main/check_wav.sh"
 wget "https://raw.githubusercontent.com/BernardoDeveloperSS/TestZabbix/main/default_sql.sh"
 
+
+chmod +x check_* && chmod +x default_sql.sh
 echo -e "UserParameter=listener.isactive,/etc/zabbix/scripts/check_listener.sh\nUserParameter=asterisk.uptime,/etc/zabbix/scripts/check_asterisk_uptime.sh\nUserParameter=asterisk.isactive,/etc/zabbix/scripts/check_asterisk.sh\nUserParameter=asterisk.agentespresos,sudo /etc/zabbix/scripts/check_agentes_presos.sh\nUserParameter=samba.montagem,/etc/zabbix/scripts/check_montagem_samba.sh\nUserParameter=gravacao.ontem,/etc/zabbix/scripts/check_gravacoes_ontem.sh\nUserParameter=gravacao.mes,/etc/zabbix/scripts/check_gravacao_30.sh\nUserParameter=gravacao.conversao,/etc/zabbix/scripts/check_conversao.sh\nUserParameter=gravacao.tamanho,/etc/zabbix/scripts/check_gravacao_tamanho.sh\nUserParameter=database.manutencao,/etc/zabbix/scripts/check_manutencao_sql.sh\nUserParameter=database.asterisk,/etc/zabbix/scripts/check_asteriskdb_users.sh\nUserParameter=database.arquivos_gravacao,/etc/zabbix/scripts/check_status_by_sqlserver.sh\nUserParameter=dss.manager,sudo /etc/zabbix/scripts/check_manager.sh" >> /etc/zabbix/zabbix_agentd.conf
