@@ -24,6 +24,7 @@ service zabbix-agent restart
 
 cd /etc/zabbix/
 mkdir scripts/
+cd scripts/
 
 wget "https://raw.githubusercontent.com/BernardoDeveloperSS/TestZabbix/main/check_agentes_presos.sh"
 wget "https://raw.githubusercontent.com/BernardoDeveloperSS/TestZabbix/main/check_asterisk.sh"
