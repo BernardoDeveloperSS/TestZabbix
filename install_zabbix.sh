@@ -24,8 +24,8 @@ iptables -A INPUT -p tcp -s 186.230.32.171/32 --dport 10050 -m state --state NEW
 service zabbix-agent restart
 
 cd /etc/zabbix/
-mkdir scripts/
-cd scripts/
+mkdir /etc/zabbix/scripts/
+cd /etc/zabbix/scripts/
 
 wget "https://raw.githubusercontent.com/BernardoDeveloperSS/TestZabbix/main/check_agentes_presos.sh"
 wget "https://raw.githubusercontent.com/BernardoDeveloperSS/TestZabbix/main/check_asterisk.sh"
