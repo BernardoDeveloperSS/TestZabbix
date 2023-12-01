@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if service listener status >/dev/null 2>&1; then
-    echo "0"
-else
+if service listener status > /dev/null; then
     echo "1"
+else
+    echo "0"
 fi
